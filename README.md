@@ -5,12 +5,15 @@ V-USB MIDI implementation for Adafruit Trinket.
 # Building
 
 1. Install `avr-gcc`, `avrdude` and some flavor of GNU `make`
-2. Follow Adafruit instructions and test you can flash .hex files with avrdude
-3. Enter command-line, change to TrinketMIDI directory and type `make all` to
+2. Follow [Adafruit
+   instructions](https://learn.adafruit.com/introducing-trinket/programming-with-avrdude)
+and test you can flash .hex files with avrdude
+3. Modify Makefile if needed to change part and programmer definitions (based on step 2).
+4. Enter command-line, change to TrinketMIDI directory and type `make all` to
    build everything.
-4. Connect Trinket to your computer, wire a switch between pin #0 and GND
-5. Push reset button on Trinket and type `make flash`
-6. In a moment, you'll have a MIDI device and the button sends middle C note!
+5. Connect Trinket to your computer, wire a switch between pin #0 and GND
+6. Push reset button on Trinket and type `make flash`
+7. In a moment, you'll have a MIDI device and the button sends middle C note!
 
 Other demos (if any) are named `demo_xxx.c` and can be built with `make
 demo_xxx.hex` and flashed with `make demo_xxx.flash`.
