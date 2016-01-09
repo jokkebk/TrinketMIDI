@@ -15,42 +15,33 @@ You should have received a copy of the GNU General Public License
 along with TrinketMIDI.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <avr/power.h>
-#include <avr/wdt.h>
-#include <util/delay.h>
-
 #include "usbconfig.h"
 #include "usbdrv/usbdrv.h"
 
-#include "vusbmidi.h"
-#include "trinketusb.h"
 #include "usbmidi.h"
 
-int main(void) {
-    uchar keydown=0;
-    unsigned debounce=0;
+uchar ring[MIDI_BUF_LEN], rr=0, rw=0;
 
-    wdt_enable(WDTO_1S);
-    usbBegin();
+void usbmidiNoteOn(uchar note, uchar velo) {
+    ring[rw++] = 0x09;
+    ring[rw++] = 0x90;
+    ring[rw++] = note;
+    ring[rw++] = velo;
+    if(rw >= MIDI_BUF_LEN) rw = 0;
+}
 
-    PORTB |= _BV(PB0); // Pullup on button
+void usbmidiNoteOff(uchar note, uchar velo) {
+    ring[rw++] = 0x08;
+    ring[rw++] = 0x80;
+    ring[rw++] = note;
+    ring[rw++] = velo;
+    if(rw >= MIDI_BUF_LEN) rw = 0;
+}
 
-    while(1) {
-        wdt_reset();
-        usbPoll();
-
-        if(debounce) debounce--;
-        else if(!(PINB & _BV(PB0)) != keydown) { // button state change
-            keydown = !keydown; // keydown to reflect current state
-            if(keydown)
-                usbmidiNoteOn(60, 50);
-            else
-                usbmidiNoteOff(60, 0);
-            debounce = 1000;
-        }
-
-        usbmidiSend();
-    }
-
-    return 0;
+void usbmidiSend() {
+    if(rr == rw || !usbInterruptIsReady()) return; // no data or not ready
+    uchar len = (rr+8 <= rw) ? 8 : 4; // send two if possible
+    usbSetInterrupt(&ring[rr], len);
+    rr += len;
+    if(rr >= MIDI_BUF_LEN) rr = 0;
 }
