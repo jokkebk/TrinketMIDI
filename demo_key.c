@@ -22,9 +22,9 @@ along with TrinketMIDI.  If not, see <http://www.gnu.org/licenses/>.
 #include "usbconfig.h"
 #include "usbdrv/usbdrv.h"
 
-#include "vusbmidi.h"
-#include "trinketusb.h"
-#include "usbmidi.h"
+#include "vusbmidi.h"   // V-USB MIDI definitions & routines
+#include "trinketusb.h" // Trinket oscillator calibration & USB init
+#include "usbmidi.h"    // usbmidi*() functions
 
 int main(void) {
     uchar keydown=0;
