@@ -31,7 +31,7 @@ License along with TrinketKeyboard. If not, see
 #include "usbconfig.h"
 #include "usbdrv/usbdrv.h"
 
-void usbBegin() {
+void trinketUsbBegin() {
 	cli();
 
 	// run at full speed, because Trinket defaults to 8MHz for low voltage compatibility reasons

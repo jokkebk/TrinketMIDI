@@ -31,7 +31,7 @@ int main(void) {
     unsigned debounce=0;
 
     wdt_enable(WDTO_1S);
-    usbBegin();
+    trinketUsbBegin();
 
     PORTB |= _BV(PB0); // Pullup on button
 

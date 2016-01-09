@@ -32,7 +32,7 @@ License along with TrinketKeyboard. If not, see
 extern "C" {
 #endif
 
-void usbBegin();
+void trinketUsbBegin();
 
 #if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny25__)
 void calibrateOscillator(void);
