@@ -1,26 +1,18 @@
 /*
-TrinketMIDI USB MIDI implementation for Adafruit Trinket.
-Based on Adafrtuit Industries TrinketKeyboard example and
-Martin Homuth-Rosemann's V-USB MIDI device code.
-
-Copyright (c) 2016 Joonas Pihlajamaa (GPL v3)
-Copyright (c) 2013 Adafruit Industries (LGPL v3)
-Copyright (c) 2008 by Martin Homuth-Rosemann (GPL v2)
-All rights reserved.
+This file is part of TrinketMIDI. See README.md for licencing details.
 
 TrinketMIDI is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as
-published by the Free Software Foundation, either version 3 of
-the License, or (at your option) any later version.
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
 TrinketMIDI is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU (Lesser) General Public
-License along with this project. If not, see
-<http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with TrinketMIDI.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <avr/power.h>
@@ -29,7 +21,7 @@ License along with this project. If not, see
 #include "usbconfig.h"
 #include "usbdrv/usbdrv.h"
 
-#include "usbmidi.h"
+#include "vusbmidi.h"
 #include "trinketusb.h"
 
 // Very minimal ring buffer implementation

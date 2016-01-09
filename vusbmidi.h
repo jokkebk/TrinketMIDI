@@ -12,8 +12,8 @@
  *
  */
 
-#ifndef __USBMIDI_H
-#define __USBMIDI_H
+#ifndef __VUSBMIDI_H
+#define __VUSBMIDI_H
 
 #include <avr/pgmspace.h>
 
@@ -38,4 +38,4 @@ void usbFunctionWriteOut(uchar * data, uchar len);
 }
 #endif
 
-#endif // __USBMIDI_H
+#endif // __VUSBMIDI_H

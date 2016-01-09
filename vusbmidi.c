@@ -15,7 +15,7 @@
 #include "usbconfig.h"
 #include "usbdrv/usbdrv.h"
 
-#include "usbmidi.h"
+#include "vusbmidi.h"
 
 // This descriptor is based on http://www.usb.org/developers/devclass_docs/midi10.pdf
 // 

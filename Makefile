@@ -11,7 +11,7 @@ DUDEFLAGS = -p trinket -c usbtiny -v
 
 # Object files for the firmware (usbdrv/oddebug.o not strictly needed I think)
 #OBJECTS = usbdrv/usbdrv.o usbdrv/oddebug.o usbdrv/usbdrvasm.o main.o
-OBJECTS = main.o trinketusb.o usbmidi.c usbdrv/usbdrv.o usbdrv/usbdrvasm.o 
+OBJECTS = main.o trinketusb.o vusbmidi.c usbdrv/usbdrv.o usbdrv/usbdrvasm.o 
 
 # By default, build the firmware and command-line client, but do not flash
 all: main.hex
