@@ -38,6 +38,14 @@ void usbmidiNoteOff(uchar note, uchar velo) {
     if(rw >= MIDI_BUF_LEN) rw = 0;
 }
 
+void usbmidiControlChange(uchar num, uchar data) {
+    ring[rw++] = 0x0B;
+    ring[rw++] = 0xB0;
+    ring[rw++] = num;
+    ring[rw++] = data;
+    if(rw >= MIDI_BUF_LEN) rw = 0;
+}
+
 void usbmidiSend() {
     if(rr == rw || !usbInterruptIsReady()) return; // no data or not ready
     uchar len = (rr+8 <= rw) ? 8 : 4; // send two if possible

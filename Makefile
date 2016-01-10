@@ -15,10 +15,12 @@ DUDEFLAGS = -p atmega328p -c usbtiny -v
 
 # Object files for the firmware (usbdrv/oddebug.o not strictly needed I think)
 OBJECTS = trinketusb.o vusbmidi.c usbmidi.c usbdrv/usbdrv.o usbdrv/usbdrvasm.o 
-DEMOS = demo_key.hex
+DEMOS = demo_key.hex demo_midiadapter.hex
 
 # By default, build the firmware and command-line client, but do not flash
-all: $(DEMOS)
+all: demo_key.hex
+
+adapter: demo_midiadapter.hex
 
 # By default, flash the key demo. See the rule below to flash other things.
 flash: demo_key.flash

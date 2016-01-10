@@ -29,11 +29,14 @@ extern "C" {
 /* Check is USB interrupt is ready and then send any bytes from buffer */
 void usbmidiSend();
 
-/* Add a not on event to midi buffer */
+/* Add a note on event to midi buffer */
 void usbmidiNoteOn(uchar note, uchar velo);
 
-/* Add a not off event to midi buffer, usually velo=0 */
+/* Add a note off event to midi buffer, usually velo=0 */
 void usbmidiNoteOff(uchar note, uchar velo);
+
+/* Add a control change event to midi buffer */
+void usbmidiControlChange(uchar num, uchar data);
 
 #ifdef __cplusplus
 }
