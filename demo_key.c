@@ -33,14 +33,14 @@ int main(void) {
     wdt_enable(WDTO_1S);
     trinketUsbBegin();
 
-    PORTB |= _BV(PB0); // Pullup on button
+    PORTB |= _BV(PB2); // Pullup on button
 
     while(1) {
         wdt_reset();
         usbPoll();
 
         if(debounce) debounce--;
-        else if(!(PINB & _BV(PB0)) != keydown) { // button state change
+        else if(!(PINB & _BV(PB2)) != keydown) { // button state change
             keydown = !keydown; // keydown to reflect current state
             if(keydown)
                 usbmidiNoteOn(60, 50);

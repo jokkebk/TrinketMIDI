@@ -4,9 +4,14 @@ OBJCOPY = avr-objcopy
 DUDE = avrdude
 
 # Update the lines below to match your configuration
-CFLAGS = -Wall -Os -Iusbdrv -I. -mmcu=attiny85 -DF_CPU=16500000
-OBJFLAGS = -j .text -j .data -O ihex
-DUDEFLAGS = -p trinket -c usbtiny -v
+
+# Below the F_CPU and part for Trinket
+#CFLAGS = -Wall -Os -Iusbdrv -I. -mmcu=attiny85 -DF_CPU=16500000 -DPRO_TRINKET
+#DUDEFLAGS = -p trinket -c usbtiny -v
+
+# Below the F_CPU and part for 12 MHz Pro Trinket
+CFLAGS = -Wall -Os -Iusbdrv -I. -mmcu=atmega328p -DF_CPU=12000000 -DPRO_TRINKET
+DUDEFLAGS = -p atmega328p -c usbtiny -v
 
 # Object files for the firmware (usbdrv/oddebug.o not strictly needed I think)
 OBJECTS = trinketusb.o vusbmidi.c usbmidi.c usbdrv/usbdrv.o usbdrv/usbdrvasm.o 
@@ -28,7 +33,7 @@ clean:
 
 # From .elf file to .hex
 %.hex: %.elf
-	$(OBJCOPY) $(OBJFLAGS) $< $@
+	$(OBJCOPY) -j .text -j .data -O ihex $< $@
 
 # All elf files will need $(OBJECTS)
 %.elf: %.o $(OBJECTS)

@@ -33,15 +33,21 @@ License along with TrinketKeyboard. If not, see
 
 /* ---------------------------- Hardware Config ---------------------------- */
 
+#ifdef PRO_TRINKET
+
+#define USB_CFG_IOPORTNAME      D
+#define USB_CFG_DMINUS_BIT      7
+#define USB_CFG_DPLUS_BIT       2
+
+#else
+
 #define USB_CFG_IOPORTNAME      B
-/* This is the port where the USB bus is connected. When you configure it to
- * "B", the registers PORTB, PINB and DDRB will be used.
- */
 #define USB_CFG_DMINUS_BIT      3
-/* This is the bit number in USB_CFG_IOPORT where the USB D- line is connected.
- * This may be any bit in the port.
- */
 #define USB_CFG_DPLUS_BIT       4
+
+#endif
+
+
 /* This is the bit number in USB_CFG_IOPORT where the USB D+ line is connected.
  * This may be any bit in the port. Please note that D+ must also be connected
  * to interrupt pin INT0! [You can also use other interrupts, see section
@@ -383,7 +389,12 @@ extern void calibrateOscillator(void);
  * interrupt than INT0, you may have to define some of these.
  */
 
-// These are probably due to Trinket USB pins which are not INT0
+#ifdef PRO_TRINKET
+
+#define USB_INTR_VECTOR         INT0_vect
+
+#else /* Just a Trinket */
+
 #define USB_INTR_CFG            PCMSK
 #define USB_INTR_CFG_SET        (1 << USB_CFG_DPLUS_BIT)
 #define USB_INTR_CFG_CLR        0
@@ -392,5 +403,7 @@ extern void calibrateOscillator(void);
 #define USB_INTR_PENDING        GIFR
 #define USB_INTR_PENDING_BIT    PCIF
 #define USB_INTR_VECTOR         PCINT0_vect
+
+#endif
 
 #endif /* __usbconfig_h_included__ */

@@ -26,6 +26,7 @@ License along with TrinketKeyboard. If not, see
 */
 
 #include <avr/power.h>
+#include <avr/interrupt.h>
 #include <util/delay.h>
 
 #include "usbconfig.h"
