@@ -20,36 +20,36 @@ along with TrinketMIDI.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "usbmidi.h"
 
-uchar ring[MIDI_BUF_LEN], rr=0, rw=0;
+uchar midiRing[MIDI_BUF_LEN], rr=0, rw=0;
 
 void usbmidiNoteOn(uchar note, uchar velo) {
-    ring[rw++] = 0x09;
-    ring[rw++] = 0x90;
-    ring[rw++] = note;
-    ring[rw++] = velo;
+    midiRing[rw++] = 0x09;
+    midiRing[rw++] = 0x90;
+    midiRing[rw++] = note;
+    midiRing[rw++] = velo;
     if(rw >= MIDI_BUF_LEN) rw = 0;
 }
 
 void usbmidiNoteOff(uchar note, uchar velo) {
-    ring[rw++] = 0x08;
-    ring[rw++] = 0x80;
-    ring[rw++] = note;
-    ring[rw++] = velo;
+    midiRing[rw++] = 0x08;
+    midiRing[rw++] = 0x80;
+    midiRing[rw++] = note;
+    midiRing[rw++] = velo;
     if(rw >= MIDI_BUF_LEN) rw = 0;
 }
 
 void usbmidiControlChange(uchar num, uchar data) {
-    ring[rw++] = 0x0B;
-    ring[rw++] = 0xB0;
-    ring[rw++] = num;
-    ring[rw++] = data;
+    midiRing[rw++] = 0x0B;
+    midiRing[rw++] = 0xB0;
+    midiRing[rw++] = num;
+    midiRing[rw++] = data;
     if(rw >= MIDI_BUF_LEN) rw = 0;
 }
 
 void usbmidiSend() {
     if(rr == rw || !usbInterruptIsReady()) return; // no data or not ready
     uchar len = (rr+8 <= rw) ? 8 : 4; // send two if possible
-    usbSetInterrupt(&ring[rr], len);
+    usbSetInterrupt(&midiRing[rr], len);
     rr += len;
     if(rr >= MIDI_BUF_LEN) rr = 0;
 }
