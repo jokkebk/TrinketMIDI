@@ -55,7 +55,7 @@ void USARTInit(unsigned int ubrr_value) {
 }
 
 ISR(USART_RX_vect) { // USART receive complete interrupt
-    if(UCSR0A & _BV(DOR0))
+    //if(UCSR0A & _BV(DOR0))
         PINB |= _BV(PB5); // toggle LED
     uchar data = UDR0;
     if(data == 0xF8 || data == 0xFE) return; // skip timestamp
@@ -77,6 +77,12 @@ int main(void) {
     while(1) {
         while(RAVAIL(serial)) { // process received MIDI data
             RGET(serial, msg); // next byte from ring buffer
+            /*if(msg & 0x80)
+                usbmidiNoteOn(msg & 0x7F, 0x10);
+            else
+                usbmidiNoteOff(msg, 0x00);
+            continue;
+            */
 
             // There are several limitations to the code below:
             // 1. System real-time messages ignored
