@@ -48,12 +48,14 @@ void USARTInit(unsigned int ubrr_value) {
     // Make sure double speed is off! Maybe Trinket bootloader sets this?
     UCSR0A &= ~(1 << U2X0);
 	//Enable the receiver
-	UCSR0B = (1 << RXEN0) | _BV(TXEN0) | (1 << RXCIE0); // enable RX complete interrupt
+    //UCSR0B = (1 << RXEN0) | _BV(TXEN0) | (1 << RXCIE0); // enable RX complete interrupt
+	UCSR0B = (1 << RXEN0) | _BV(TXEN0);
 	// Frame Format: asynchronous 8-N-1
 	UCSR0C = (0 << USBS0) | (3 << UCSZ00);
     sei();
 }
 
+/*
 ISR(USART_RX_vect) { // USART receive complete interrupt
     //if(UCSR0A & _BV(DOR0))
         PINB |= _BV(PB5); // toggle LED
@@ -61,6 +63,7 @@ ISR(USART_RX_vect) { // USART receive complete interrupt
     if(data == 0xF8 || data == 0xFE) return; // skip timestamp
     RPUT(serial, data); // clear RX FIFO
 }
+*/
 
 int main(void) {
     enum { NOTEON, NOTEOFF, CONTROL, OTHER } state = OTHER;
@@ -72,11 +75,12 @@ int main(void) {
 
     trinketUsbBegin();
 
-    DDRB |= _BV(PB5); // LED as output
+    DDRB |= _BV(PB3) + _BV(PB4) + _BV(PB5); // LED as output
 
     while(1) {
-        while(RAVAIL(serial)) { // process received MIDI data
-            RGET(serial, msg); // next byte from ring buffer
+        //while(RAVAIL(serial)) { // process received MIDI data
+            //RGET(serial, msg); // next byte from ring buffer
+            //
             /*if(msg & 0x80)
                 usbmidiNoteOn(msg & 0x7F, 0x10);
             else
@@ -88,7 +92,10 @@ int main(void) {
             // 1. System real-time messages ignored
             // 2. Only note on, off and control change handled
             // 3. Channel number ignored
-
+        PINB |= _BV(PB5); // Toggle LED
+        while(UCSR0A & (1<<RXC0)) {
+            msg = UDR0;
+            PINB |= _BV(PB4); // Toggle PB4
             if(msg & 0x80) { // MIDI status byte
                 if(msg == 0xF8 || msg == 0xFE) {
                     // Ignore Timing Clock and Active Sensing
@@ -112,6 +119,7 @@ int main(void) {
                     }
                 }
             } else { // MIDI data byte
+                PINB |= _BV(PB3); // Toggle PB3
                 data[dp++] = msg;
 
                 if(dp >= 2) {

@@ -34,8 +34,10 @@ int main(void) {
     trinketUsbBegin();
 
     PORTB |= _BV(PB2); // Pullup on button
+    DDRB |= _BV(PB1); // LED pin as output
 
     while(1) {
+        PINB |= _BV(PB1); // Toggle LED
         wdt_reset();
         usbPoll();
 
