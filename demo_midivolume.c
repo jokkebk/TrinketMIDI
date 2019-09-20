@@ -135,7 +135,7 @@ int main(void) {
         if(debounce) debounce--;
         else
         {
-          if(!(PINB & _BV(PB0)) != key1down) { // button 1 state change
+          if((!(PINB & _BV(PB0))) != key1down) { // button 1 state change
             key1down = !key1down;              // key1down reflect current state
             if(key1down) {
               ProgChange += 1;
@@ -144,7 +144,7 @@ int main(void) {
             }
           }
 
-          if(!(PINB & _BV(PB1)) != key2down) { // button 2 state change
+          if((!(PINB & _BV(PB1))) != key2down) { // button 2 state change
             key2down = !key2down;              // key2down reflect current state
             if(key2down) {
               if (ProgChange == 0) ProgChange = MAXPROGCHANGE;
